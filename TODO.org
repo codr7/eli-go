@@ -1,1 +1,5 @@
+* rename Set to PutValue
+* add PushValue op
+** add vm.Stack
+*** add Stack type
 * extract test from main
