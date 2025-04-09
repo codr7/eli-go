@@ -12,7 +12,7 @@ func main() {
 
      r := vm.Alloc(1)
      pc := vm.EmitPC()
-     vm.Emit(ops.Set(r, eli.NewValue(&core.Int, 42))) 
+     vm.Emit(ops.PutValue(r, eli.NewValue(&core.Int, 42))) 
      vm.Eval(pc)
 
      fmt.Printf("%v\n", vm.Registers.Get(r).Data())

@@ -2,16 +2,16 @@ package ops
 
 import "eli/src/eli"
 
-type OSet struct {
+type TPutValue struct {
 	target eli.Register
 	value  eli.Value
 }
 
-func Set(target eli.Register, value eli.Value) *OSet {
-	return &OSet{target: target, value: value}
+func PutValue(target eli.Register, value eli.Value) *TPutValue {
+	return &TPutValue{target: target, value: value}
 }
 
-func (o *OSet) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
+func (op *TPutValue) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
 	next := func() error { return nil }
 	pc++
 	
@@ -20,7 +20,7 @@ func (o *OSet) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
 	}
 
 	return func () error {
-		vm.Registers.Set(o.target, o.value.Dup())
+		vm.Registers.Put(op.target, op.value.Dup())
 		return next()
 	}
 }

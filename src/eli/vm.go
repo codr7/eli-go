@@ -6,7 +6,8 @@ type Register = int
 type VM struct {
 	Debug bool
 	Registers Vector[Value]
-
+	Stack Stack
+	
 	ops Vector[Op]
 	opcs Vector[Opc]
 }

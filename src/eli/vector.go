@@ -20,6 +20,6 @@ func (v *Vector[T]) Push(it T) {
 	v.items = append(v.items, it)
 }
 
-func (v *Vector[T]) Set(i int, it T) {
+func (v *Vector[T]) Put(i int, it T) {
 	v.items[i] = it
 }
