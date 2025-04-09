@@ -1,3 +1,4 @@
+* add PushRegister op
 * extract test from main
-** /tests
-* add PushValue test
+** src/test
+* add PushValue/Register tests
