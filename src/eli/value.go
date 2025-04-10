@@ -5,7 +5,7 @@ type Value struct {
 	data any
 }
 
-func NewValue[D any](etype DataType[D], data D) Value {
+func V[D any](etype DataType[D], data D) Value {
 	return new(Value).Init(etype, data)
 }
 

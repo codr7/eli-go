@@ -1,4 +1,2 @@
-* add PushRegister op
-* extract test from main
-** src/test
-* add PushValue/Register tests
+* add GOTO op
+* implement limited eval(from, to)

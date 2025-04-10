@@ -5,11 +5,11 @@ type Register = int
 
 type VM struct {
 	Debug bool
-	Registers Vector[Value]
+	Registers Deque[Value]
 	Stack Stack
 	
-	ops Vector[Op]
-	opcs Vector[Opc]
+	ops Deque[Op]
+	opcs Deque[Opc]
 }
 
 func (vm *VM) Init() {
@@ -20,7 +20,7 @@ func (vm *VM) Alloc(n int) Register {
 	result := vm.Registers.Len()
 
 	for i := 0; i < n; i++ {
-		vm.Registers.Push(Value{})
+		vm.Registers.PushLast(Value{})
 	}
 
 	return result
@@ -28,13 +28,13 @@ func (vm *VM) Alloc(n int) Register {
 
 func (vm *VM) Compile(pc PC) {
 	for i := pc; i < vm.ops.Len(); i++ {
-		vm.opcs.Push(vm.ops.Get(i).Compile(vm, i))
+		vm.opcs.PushLast(vm.ops.Get(i).Compile(vm, i))
 	}
 }
 
 func (vm *VM) Emit(op Op) int {
 	result := vm.ops.Len()
-	vm.ops.Push(op)
+	vm.ops.PushLast(op)
 	return result
 }
 
