@@ -12,12 +12,7 @@ func PutValue(target eli.Register, value eli.Value) *TPutValue {
 }
 
 func (op *TPutValue) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
-	next := func() error { return nil }
-	pc++
-	
-	if vm.EmitPC() > pc {
-		next = vm.Op(pc).Compile(vm, pc)
-	}
+	next := vm.Opc(pc+1)
 
 	return func () error {
 		vm.Registers.Put(op.target, op.value.Dup())

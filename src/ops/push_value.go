@@ -11,12 +11,7 @@ func PushValue(value eli.Value) *TPushValue {
 }
 
 func (op *TPushValue) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
-	next := func() error { return nil }
-	pc++
-	
-	if vm.EmitPC() > pc {
-		next = vm.Op(pc).Compile(vm, pc)
-	}
+	next := vm.Opc(pc+1)
 
 	return func () error {
 		vm.Stack.Push(op.value.Dup())

@@ -54,6 +54,12 @@ func (vm *VM) Eval(pc PC) error {
 	return vm.opcs.Get(pc)()
 }
 
-func (vm *VM) Op(pc PC) Op {
-	return vm.ops.Get(pc)
+func (vm *VM) Opc(pc PC) Opc {
+	result := func() error { return nil }
+
+	if pc < vm.EmitPC() {
+		result = vm.ops.Get(pc).Compile(vm, pc)
+	}
+
+	return result
 }

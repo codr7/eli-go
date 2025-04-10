@@ -1,2 +1,1 @@
-* add GOTO op
 * implement limited eval(from, to)
