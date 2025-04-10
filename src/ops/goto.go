@@ -11,5 +11,13 @@ func Goto(pc eli.PC) *TGoto {
 }
 
 func (op *TGoto) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
-	return vm.Opc(op.pc)
+	next := vm.Opc(op.pc)
+	
+	return func() error {
+		if vm.StopPC == pc {
+			return nil
+		}
+		
+		return next()
+	}
 }

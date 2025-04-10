@@ -15,6 +15,10 @@ func (op *TPutValue) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
 	next := vm.Opc(pc+1)
 
 	return func () error {
+		if vm.StopPC == pc {
+			return nil
+		}
+
 		vm.Registers.Put(op.target, op.value.Dup())
 		return next()
 	}

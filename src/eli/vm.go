@@ -1,5 +1,8 @@
 package eli
 
+import (
+)
+
 type PC = int
 type Register = int
 
@@ -7,6 +10,7 @@ type VM struct {
 	Debug bool
 	Registers Deque[Value]
 	Stack Stack
+	StopPC PC
 	
 	ops Deque[Op]
 	opcs Deque[Opc]
@@ -14,6 +18,7 @@ type VM struct {
 
 func (vm *VM) Init() {
 	vm.Debug = true
+	vm.StopPC = -1
 }
 
 func (vm *VM) Alloc(n int) Register {
@@ -42,16 +47,20 @@ func (vm *VM) EmitPC() PC {
 	return vm.ops.Len()
 }
 
-func (vm *VM) Eval(pc PC) error {
+func (vm *VM) Eval(fromPC, toPC PC) error {
+	if fromPC == vm.ops.Len() {
+		return nil
+	}
+
 	if vm.opcs.Len() < vm.ops.Len() {
 		vm.Compile(vm.opcs.Len())
 	}
-	
-	if pc >= vm.opcs.Len() {
-		return nil
-	}
-	
-	return vm.opcs.Get(pc)()
+
+	prevStopPC := vm.StopPC
+	defer func() { vm.StopPC = prevStopPC }()
+	vm.StopPC = toPC
+
+	return vm.opcs.Get(fromPC)()
 }
 
 func (vm *VM) Opc(pc PC) Opc {
