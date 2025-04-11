@@ -10,7 +10,7 @@ type VM struct {
 	Debug bool
 	Registers Deque[Value]
 	Stack Stack
-	StopPC PC
+	Stop PC
 	
 	ops Deque[Op]
 	opcs Deque[Opc]
@@ -18,7 +18,7 @@ type VM struct {
 
 func (vm *VM) Init() {
 	vm.Debug = true
-	vm.StopPC = -1
+	vm.Stop = -1
 }
 
 func (vm *VM) Alloc(n int) Register {
@@ -31,9 +31,9 @@ func (vm *VM) Alloc(n int) Register {
 	return result
 }
 
-func (vm *VM) Compile(pc PC) {
-	for i := pc; i < vm.ops.Len(); i++ {
-		vm.opcs.PushLast(vm.ops.Get(i).Compile(vm, i))
+func (vm *VM) Compile(from PC) {
+	for pc := from; pc < vm.ops.Len(); pc++ {
+		vm.opcs.PushLast(vm.Opc(pc))
 	}
 }
 
@@ -47,8 +47,8 @@ func (vm *VM) EmitPC() PC {
 	return vm.ops.Len()
 }
 
-func (vm *VM) Eval(fromPC, toPC PC) error {
-	if fromPC == vm.ops.Len() {
+func (vm *VM) Eval(from, to PC) error {
+	if from == vm.ops.Len() {
 		return nil
 	}
 
@@ -56,11 +56,11 @@ func (vm *VM) Eval(fromPC, toPC PC) error {
 		vm.Compile(vm.opcs.Len())
 	}
 
-	prevStopPC := vm.StopPC
-	defer func() { vm.StopPC = prevStopPC }()
-	vm.StopPC = toPC
+	prevStop := vm.Stop
+	defer func() { vm.Stop = prevStop }()
+	vm.Stop = to
 
-	return vm.opcs.Get(fromPC)()
+	return vm.opcs.Get(from)()
 }
 
 func (vm *VM) Opc(pc PC) Opc {

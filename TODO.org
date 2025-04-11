@@ -1,1 +1,5 @@
 * fib
+
+M-x follow-mode
+(setf scroll-preserve-screen-position t)
+(setf next-screen-context-lines 0)

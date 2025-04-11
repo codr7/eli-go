@@ -1,7 +1,6 @@
 package ops
 
 import (
-	"fmt"
 	"eli/src/eli"
 )
 
@@ -17,9 +16,7 @@ func (op *TGet) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
 	next := vm.Opc(pc+1)
 	
 	return func () error {
-		fmt.Printf("GET %v %v\n", vm.StopPC, pc)
-
-		if vm.StopPC == pc {
+		if pc == vm.Stop {
 			return nil
 		}
 		

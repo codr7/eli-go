@@ -15,7 +15,7 @@ func (op *TPutValue) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
 	next := vm.Opc(pc+1)
 
 	return func () error {
-		if vm.StopPC == pc {
+		if pc == vm.Stop {
 			return nil
 		}
 
