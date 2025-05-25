@@ -13,7 +13,7 @@ func Put(target eli.Register, value eli.Value) *TPut {
 
 func (self *TPut) Compile(vm *eli.VM, pc eli.PC) eli.OpEval {
 	return func () (eli.PC, error) {
-		vm.Registers.Put(self.target, self.value.Dup(vm))
+		vm.Registers.Items[self.target] = self.value.Dup(vm)
 		return pc+1, nil
 	}
 }

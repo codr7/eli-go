@@ -14,7 +14,7 @@ func Get(source eli.Register) *TGet {
 
 func (self *TGet) Compile(vm *eli.VM, pc eli.PC) eli.OpEval {
 	return func () (eli.PC, error) {
-		vm.Stack.Push(vm.Registers.Get(self.source))
+		vm.Stack.Push(vm.Registers.Items[self.source])
 		return pc+1, nil
 	}
 }
