@@ -1,20 +1,20 @@
 package eli
 
 type Lib interface {
-	Bind(string, Value)
+	Bind(Sym, Value)
 	BindType(Type)
-	Name() string
+	Name() Sym
 }
 
 type BaseLib struct {
-	name string
-	bindings map[string]*Value
+	name Sym
+	bindings map[Sym]*Value
 }
 
-func (self *BaseLib) Init(name string) {
+func (self *BaseLib) Init(name Sym) {
 	self.name = name
 }
 
-func (self *BaseLib) Bind(k string, v Value) {
+func (self *BaseLib) Bind(k Sym, v Value) {
 	self.bindings[k] = &v
 }

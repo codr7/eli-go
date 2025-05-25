@@ -9,5 +9,5 @@ type IntType struct {
 var Int IntType
 
 func init() {
-	Int.Init("Int")
+	Int.Init(eli.S("Int"))
 }

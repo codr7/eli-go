@@ -9,5 +9,5 @@ type SymType struct {
 var Sym SymType
 
 func init() {
-	Sym.Init("Sym")
+	Sym.Init(eli.S("Sym"))
 }

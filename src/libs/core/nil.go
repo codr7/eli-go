@@ -10,6 +10,6 @@ var Nil NilType
 var NIL eli.Value
 
 func init() {
-	Nil.Init("Nil")
+	Nil.Init(eli.S("Nil"))
 	NIL.Init(&Nil, nil)
 }

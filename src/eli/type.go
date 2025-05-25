@@ -2,7 +2,7 @@ package eli
 
 type Type interface {
 	Dup(Value, *VM) Value
-	Name() string
+	Name() Sym
 }
 
 type DataType[T any] interface {
@@ -11,10 +11,10 @@ type DataType[T any] interface {
 }
 
 type BaseType[T any] struct {
-	name string
+	name Sym
 }
 
-func (t *BaseType[T]) Init(name string) {
+func (t *BaseType[T]) Init(name Sym) {
 	t.name = name
 }
 
@@ -22,7 +22,7 @@ func (t *BaseType[T]) Dup(v Value, vm *VM) Value {
 	return v
 }
 
-func (t *BaseType[T]) Name() string {
+func (t *BaseType[T]) Name() Sym {
 	return t.name
 }
 

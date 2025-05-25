@@ -9,5 +9,5 @@ type MetaType struct {
 var Meta MetaType
 
 func init() {
-	Meta.Init("Meta")
+	Meta.Init(eli.S("Meta"))
 }
