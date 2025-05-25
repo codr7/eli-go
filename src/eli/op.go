@@ -1,7 +1,7 @@
 package eli
 
-type Opc func () error
+type OpEval func () (PC, error)
 
 type Op interface {
-	Compile(vm *VM, pc PC) Opc
+	Compile(vm *VM, pc PC) OpEval
 }

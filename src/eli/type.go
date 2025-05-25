@@ -1,6 +1,7 @@
 package eli
 
 type Type interface {
+	Dup(Value, *VM) Value
 	Name() string
 }
 
@@ -15,6 +16,10 @@ type BasicType[T any] struct {
 
 func (t *BasicType[T]) Init(name string) {
 	t.name = name
+}
+
+func (t *BasicType[T]) Dup(v Value, vm *VM) Value {
+	return v
 }
 
 func (t *BasicType[T]) Name() string {

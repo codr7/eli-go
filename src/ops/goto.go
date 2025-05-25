@@ -10,14 +10,8 @@ func Goto(pc eli.PC) *TGoto {
 	return &TGoto{pc: pc}
 }
 
-func (op *TGoto) Compile(vm *eli.VM, pc eli.PC) eli.Opc {
-	next := vm.Opc(op.pc)
-	
-	return func() error {
-		if pc == vm.Stop {
-			return nil
-		}
-		
-		return next()
+func (self *TGoto) Compile(vm *eli.VM, pc eli.PC) eli.OpEval {
+	return func() (eli.PC, error) {
+		return self.pc, nil
 	}
 }

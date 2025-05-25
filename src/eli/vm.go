@@ -8,24 +8,22 @@ type Register = int
 
 type VM struct {
 	Debug bool
-	Registers Deque[Value]
-	Stack Stack
-	Stop PC
+	Registers Stack[Value]
+	Stack Stack[Value]
 	
-	ops Deque[Op]
-	opcs Deque[Opc]
+	ops Stack[Op]
+	opEvals Stack[OpEval]
 }
 
 func (vm *VM) Init() {
 	vm.Debug = true
-	vm.Stop = -1
 }
 
 func (vm *VM) Alloc(n int) Register {
 	result := vm.Registers.Len()
 
 	for i := 0; i < n; i++ {
-		vm.Registers.PushLast(Value{})
+		vm.Registers.Push(Value{})
 	}
 
 	return result
@@ -33,13 +31,13 @@ func (vm *VM) Alloc(n int) Register {
 
 func (vm *VM) Compile(from PC) {
 	for pc := from; pc < vm.ops.Len(); pc++ {
-		vm.opcs.PushLast(vm.Opc(pc))
+		vm.opEvals.Push(vm.ops.Items[pc].Compile(vm, pc))
 	}
 }
 
 func (vm *VM) Emit(op Op) int {
 	result := vm.ops.Len()
-	vm.ops.PushLast(op)
+	vm.ops.Push(op)
 	return result
 }
 
@@ -48,27 +46,21 @@ func (vm *VM) EmitPC() PC {
 }
 
 func (vm *VM) Eval(from, to PC) error {
-	if from == vm.ops.Len() {
-		return nil
+	if to == -1 {
+		to = vm.ops.Len()
 	}
 
-	if vm.opcs.Len() < vm.ops.Len() {
-		vm.Compile(vm.opcs.Len())
+	if vm.opEvals.Len() < to {
+		vm.Compile(vm.opEvals.Len())
 	}
 
-	prevStop := vm.Stop
-	defer func() { vm.Stop = prevStop }()
-	vm.Stop = to
-
-	return vm.opcs.Get(from)()
-}
-
-func (vm *VM) Opc(pc PC) Opc {
-	result := func() error { return nil }
-
-	if pc < vm.EmitPC() {
-		result = vm.ops.Get(pc).Compile(vm, pc)
+	var err error;
+	
+	for pc := from;
+	err == nil && pc < to;
+	pc, err = vm.opEvals.Items[pc]() {
+		//Do nothing
 	}
 
-	return result
+	return err
 }

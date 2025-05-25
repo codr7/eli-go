@@ -1,18 +1,18 @@
 package eli
 
-type Stack struct {
-	Deque[Value]
+type Stack[T any] struct {
+	Deque[T]
 }
 
-func (s Stack) Peek() *Value {
-	return s.PeekLast()
+func (self Stack[T]) Peek() *T {
+	return self.PeekLast()
 }
 
-func (s *Stack) Pop() Value {
-	return s.PopLast()
+func (self *Stack[T]) Pop() T {
+	return self.PopLast()
 }
 
-func (s *Stack) Push(it Value) {
-	s.PushLast(it)
+func (self *Stack[T]) Push(it T) {
+	self.PushLast(it)
 }
 

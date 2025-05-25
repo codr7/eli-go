@@ -1,22 +1,33 @@
 package eli
 
+import (
+	"fmt"
+)
+
 type Value struct {
-	etype Type
-	data any
+	Type Type
+	Data any
 }
 
-func V[D any](etype DataType[D], data D) Value {
-	return new(Value).Init(etype, data)
+func V[T any](t DataType[T], d T) Value {
+	return *new(Value).Init(t, d)
 }
 
-func (v *Value) Init(etype Type, data any) Value {
-	return Value{etype: etype, data: data}
+func (self *Value) Init(t Type, d any) *Value {
+	self.Type = t
+	self.Data = d
+	return self
 }
 
-func (v Value) Data() any {
-	return v.data
+func (self Value) Dup(vm *VM) Value {
+	return self.Type.Dup(self, vm)
 }
 
-func (v Value) Dup() Value {
-	return v
+func Cast[T any](v Value, t DataType[T]) (T, error) {
+	if v.Type != t {
+		var tv T
+		return tv, fmt.Errorf("Expected %v: %v", v.Type, t)
+	}
+	
+	return v.Data.(T), nil
 }
