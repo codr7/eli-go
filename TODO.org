@@ -1,4 +1,3 @@
-* add iter All() to Deque
 * use slices package in Deque
 ** insert/delete
 * add BSet type

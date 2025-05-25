@@ -1,5 +1,9 @@
 package eli
 
+import (
+	"iter"
+)
+
 type Deque[T any] struct {
 	Items []T
 }
@@ -11,6 +15,16 @@ func NewDeque[T any](items...T) *Deque[T] {
 func (self *Deque[T]) Init(items...T) *Deque[T] {
 	self.Items = items
 	return self
+}
+
+func (self Deque[T]) All() iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for _, v := range self.Items {
+			if !yield(v) {
+				return
+			}
+		}
+	}
 }
 
 func (self Deque[T]) Get(i int) T {
