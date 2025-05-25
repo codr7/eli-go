@@ -1,15 +1,16 @@
 package eli
 
 import (
-	"unique"
+	"bufio"
 )
 
 type PC = int
 type Register = int
-type Sym = unique.Handle[string]
-
+type Reader = func (*VM, *bufio.Reader, *Deque[Form], *SLoc) (bool, error)
+	
 type VM struct {
 	Debug bool
+	Reader Reader
 	Registers Stack[Value]
 	Stack Stack[Value]
 	
@@ -17,52 +18,68 @@ type VM struct {
 	opEvals Stack[OpEval]
 }
 
-func (vm *VM) Init() {
-	vm.Debug = true
+func (self *VM) Init() {
+	self.Debug = true
 }
 
-func (vm *VM) Alloc(n int) Register {
-	result := vm.Registers.Len()
+func (self *VM) Alloc(n int) Register {
+	result := self.Registers.Len()
 
 	for i := 0; i < n; i++ {
-		vm.Registers.Push(Value{})
+		self.Registers.Push(Value{})
 	}
 
 	return result
 }
 
-func (vm *VM) Compile(from PC) {
-	for pc := from; pc < vm.ops.Len(); pc++ {
-		vm.opEvals.Push(vm.ops.Items[pc].Compile(vm, pc))
+func (self *VM) Compile(from PC) {
+	for pc := from; pc < self.ops.Len(); pc++ {
+		self.opEvals.Push(self.ops.Items[pc].Compile(self, pc))
 	}
 }
 
-func (vm *VM) Emit(op Op) int {
-	result := vm.ops.Len()
-	vm.ops.Push(op)
+func (self *VM) Emit(op Op) int {
+	result := self.ops.Len()
+	self.ops.Push(op)
 	return result
 }
 
-func (vm *VM) EmitPC() PC {
-	return vm.ops.Len()
+func (self VM) EmitPC() PC {
+	return self.ops.Len()
 }
 
-func (vm *VM) Eval(from, to PC) error {
+func (self *VM) Eval(from, to PC) error {
 	if to == -1 {
-		to = vm.ops.Len()
+		to = self.ops.Len()
 	}
 
-	if vm.opEvals.Len() < to {
-		vm.Compile(vm.opEvals.Len())
+	if self.opEvals.Len() < to {
+		self.Compile(self.opEvals.Len())
 	}
 
 	var err error;
 	
 	for pc := from;
 	err == nil && pc < to;
-	pc, err = vm.opEvals.Items[pc]() {
+	pc, err = self.opEvals.Items[pc]() {
 		//Do nothing
 	}
 
 	return err
+}
+
+func (self *VM) Read(in *bufio.Reader, out *Deque[Form], sloc *SLoc) error {
+	for {
+		ok, err := self.Reader(self, in, out, sloc)
+
+		if err != nil {
+			return err
+		}
+
+		if !ok {
+			break;
+		}
+	}
+
+	return nil
 }

@@ -1,6 +1,12 @@
 package eli
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type Type interface {
+	Dump(Value, *bufio.Writer, *VM)
 	Dup(Value, *VM) Value
 	Name() Sym
 }
@@ -16,6 +22,10 @@ type BaseType[T any] struct {
 
 func (t *BaseType[T]) Init(name Sym) {
 	t.name = name
+}
+
+func (t *BaseType[T]) Dump(v Value, out *bufio.Writer, vm *VM) {
+	fmt.Fprintf(out, "%v", v.Data)
 }
 
 func (t *BaseType[T]) Dup(v Value, vm *VM) Value {

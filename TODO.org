@@ -1,7 +1,9 @@
-* use slices package in Deque
-** insert/delete
-* add repl
-
-M-x follow-mode
-(setf scroll-preserve-screen-position t)
-(setf next-screen-context-lines 0)
+* add /readers
+** add id reader
+*** add id form
+** add call reader
+*** add call form
+* fix repl form emit
+* add quoting
+** add quote reader
+* add define macro
