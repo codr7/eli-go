@@ -1,12 +1,8 @@
-* rename opcs to opEvals
-** simplify Eval loop
-* generalize Stack
 * add iter All() to Deque
 * use slices package in Deque
 ** insert/delete
 * add BSet type
 ** comparable keys
-* add symbols with unique.Make
 * fib
 
 M-x follow-mode
