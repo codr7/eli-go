@@ -2,6 +2,7 @@ package eli
 
 import (
 	"iter"
+	"slices"
 )
 
 type Deque[T any] struct {
@@ -27,8 +28,12 @@ func (self Deque[T]) All() iter.Seq[T] {
 	}
 }
 
-func (self Deque[T]) Get(i int) T {
-	return self.Items[i]
+func (self *Deque[T]) Delete(i, n int) {
+	self.Items = slices.Delete(self.Items, i, i+n);
+}
+
+func (self *Deque[T]) Insert(i int, items...T) {
+	self.Items = slices.Insert(self.Items, i, items...);
 }
 
 func (self Deque[T]) Len() int {
@@ -45,7 +50,7 @@ func (self Deque[T]) PeekLast() *T {
 
 func (self *Deque[T]) PopFirst() T {
 	it := self.Items[0]
-	self.Items = self.Items[1:]
+	self.Delete(0, 1)
 	return it
 }
 
@@ -57,14 +62,9 @@ func (self *Deque[T]) PopLast() T {
 }
 
 func (self *Deque[T]) PushFirst(it T) {
-	self.Items = append(self.Items, it)
-	copy(self.Items[:len(self.Items)-1], self.Items[1:])
+	self.Insert(0, it)
 }
 
 func (self *Deque[T]) PushLast(it T) {
 	self.Items = append(self.Items, it)
-}
-
-func (self *Deque[T]) Put(i int, it T) {
-	self.Items[i] = it
 }

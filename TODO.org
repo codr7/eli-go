@@ -1,7 +1,6 @@
 * use slices package in Deque
 ** insert/delete
-* add BSet type
-** comparable keys
+* finish BSet type
 * add repl
 
 M-x follow-mode

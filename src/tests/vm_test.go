@@ -13,7 +13,7 @@ func TestGet(t *testing.T) {
 	vm.Init()
 
 	r := vm.Alloc(1)
-	vm.Registers.Put(r, eli.V(&core.Int, 42))
+	vm.Registers.Items[r] = eli.V(&core.Int, 42)
 
 	pc := vm.EmitPC()
 	vm.Emit(ops.Get(r))
@@ -46,7 +46,7 @@ func TestPutValue(t *testing.T) {
 	vm.Emit(ops.Put(r, eli.V(&core.Int, 42))) 
 	vm.Eval(pc, -1)
 
-	if v := vm.Registers.Get(r).Data; v != 42 {
+	if v := vm.Registers.Items[r].Data; v != 42 {
 		t.Fatalf("Expected 42, actual %v", v)
 	}
 }
