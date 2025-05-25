@@ -1,5 +1,3 @@
-* add stop op
-** goto end
 * add iter All() to Deque
 * use slices package in Deque
 ** insert/delete

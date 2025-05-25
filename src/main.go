@@ -1,8 +1,11 @@
 package main
 
-import "eli/src/eli"
+import (
+	"eli/src/eli"
+	//"fmt"
+)
 
 func main() {
-     var vm eli.VM
-     vm.Init()
+	var vm eli.VM
+	vm.Init()
 }
