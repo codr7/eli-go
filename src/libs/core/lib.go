@@ -3,11 +3,11 @@ package core
 import "eli/src/eli"
 
 type Lib struct {
-	eli.BasicLib
+	eli.BaseLib
 }
 
 func (self *Lib) Init(name string) {
-	self.BasicLib.Init(name)
+	self.BaseLib.Init(name)
 	self.BindType(&Int)
 	self.BindType(&Meta)
 	self.BindType(&Nil)

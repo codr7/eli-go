@@ -1,9 +1,15 @@
+* Basic -> Base
+** grep
+* replace string with Sym
+* index .Items directly in ops
+* add stop op
+** goto end
 * add iter All() to Deque
 * use slices package in Deque
 ** insert/delete
 * add BSet type
 ** comparable keys
-* fib
+* add repl
 
 M-x follow-mode
 (setf scroll-preserve-screen-position t)

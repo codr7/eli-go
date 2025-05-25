@@ -3,7 +3,7 @@ package core
 import "eli/src/eli"
 
 type SymType struct {
-	eli.BasicType[eli.Sym]
+	eli.BaseType[eli.Sym]
 }
 
 var Sym SymType

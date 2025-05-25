@@ -10,23 +10,23 @@ type DataType[T any] interface {
 	Zero() T
 }
 
-type BasicType[T any] struct {
+type BaseType[T any] struct {
 	name string
 }
 
-func (t *BasicType[T]) Init(name string) {
+func (t *BaseType[T]) Init(name string) {
 	t.name = name
 }
 
-func (t *BasicType[T]) Dup(v Value, vm *VM) Value {
+func (t *BaseType[T]) Dup(v Value, vm *VM) Value {
 	return v
 }
 
-func (t *BasicType[T]) Name() string {
+func (t *BaseType[T]) Name() string {
 	return t.name
 }
 
-func (t *BasicType[T]) Zero() T {
+func (t *BaseType[T]) Zero() T {
 	var v T
 	return v
 }

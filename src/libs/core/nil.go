@@ -3,7 +3,7 @@ package core
 import "eli/src/eli"
 
 type NilType struct {
-	eli.BasicType[any]
+	eli.BaseType[any]
 }
 
 var Nil NilType

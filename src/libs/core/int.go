@@ -3,7 +3,7 @@ package core
 import "eli/src/eli"
 
 type IntType struct {
-	eli.BasicType[int]
+	eli.BaseType[int]
 }
 
 var Int IntType

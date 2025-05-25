@@ -3,7 +3,7 @@ package core
 import "eli/src/eli"
 
 type MetaType struct {
-	eli.BasicType[eli.Type]
+	eli.BaseType[eli.Type]
 }
 
 var Meta MetaType

@@ -6,15 +6,15 @@ type Lib interface {
 	Name() string
 }
 
-type BasicLib struct {
+type BaseLib struct {
 	name string
 	bindings map[string]*Value
 }
 
-func (self *BasicLib) Init(name string) {
+func (self *BaseLib) Init(name string) {
 	self.name = name
 }
 
-func (self *BasicLib) Bind(k string, v Value) {
+func (self *BaseLib) Bind(k string, v Value) {
 	self.bindings[k] = &v
 }
