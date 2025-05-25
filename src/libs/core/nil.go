@@ -7,7 +7,9 @@ type NilType struct {
 }
 
 var Nil NilType
+var NIL eli.Value
 
 func init() {
 	Nil.Init("Nil")
+	NIL.Init(&Nil, nil)
 }

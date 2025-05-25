@@ -6,12 +6,14 @@ type Lib struct {
 	eli.BasicLib
 }
 
-var nilValue eli.Value
-
-func NIL() eli.Value {
-	return nilValue
+func (self *Lib) Init(name string) {
+	self.BasicLib.Init(name)
+	self.BindType(&Int)
+	self.BindType(&Meta)
+	self.BindType(&Nil)
+	self.BindType(&Sym)
 }
 
-func init() {
-	nilValue.Init(&Nil, nil)
+func (self *Lib) BindType(t eli.Type) {
+	self.Bind(t.Name(), eli.V(&Meta, t))
 }

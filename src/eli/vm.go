@@ -1,10 +1,12 @@
 package eli
 
 import (
+	"unique"
 )
 
 type PC = int
 type Register = int
+type Sym = unique.Handle[string]
 
 type VM struct {
 	Debug bool

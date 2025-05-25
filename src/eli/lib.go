@@ -1,13 +1,20 @@
 package eli
 
 type Lib interface {
+	Bind(string, Value)
+	BindType(Type)
 	Name() string
 }
 
 type BasicLib struct {
 	name string
+	bindings map[string]*Value
 }
 
-func (l *BasicLib) Init(name string) {
-	l.name = name
+func (self *BasicLib) Init(name string) {
+	self.name = name
+}
+
+func (self *BasicLib) Bind(k string, v Value) {
+	self.bindings[k] = &v
 }
