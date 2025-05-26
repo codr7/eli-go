@@ -29,7 +29,7 @@ func Repl(vm *eli.VM) {
 		line := in.Text()
 
 		if line == "" {
-			sloc := eli.NewSLoc("repl")
+			sloc := eli.NewSloc("repl")
 			pc := vm.EmitPC()
 			var forms eli.Deque[eli.Form]
 

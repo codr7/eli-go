@@ -6,7 +6,7 @@ import (
 
 type PC = int
 type Register = int
-type Reader = func (*VM, *bufio.Reader, *Deque[Form], *SLoc) (bool, error)
+type Reader = func (*VM, *bufio.Reader, *Deque[Form], *Sloc) (bool, error)
 	
 type VM struct {
 	Debug bool
@@ -68,7 +68,7 @@ func (self *VM) Eval(from, to PC) error {
 	return err
 }
 
-func (self *VM) Read(in *bufio.Reader, out *Deque[Form], sloc *SLoc) error {
+func (self *VM) Read(in *bufio.Reader, out *Deque[Form], sloc *Sloc) error {
 	for {
 		ok, err := self.Reader(self, in, out, sloc)
 

@@ -5,20 +5,20 @@ import (
 )
 
 type Form interface {
-	SLoc() SLoc
+	Sloc() Sloc
 	Emit(in *Deque[Form], vm *VM) error
 	Quote(vm *VM) Value
 	Dump(out *bufio.Writer) error
 }
 
 type BaseForm struct {
-	sloc SLoc
+	sloc Sloc
 }
 
-func (self *BaseForm) Init(sloc SLoc) {
+func (self *BaseForm) Init(sloc Sloc) {
 	self.sloc = sloc
 }
 
-func (self BaseForm) SLoc() SLoc {
+func (self BaseForm) Sloc() Sloc {
 	return self.sloc
 }
