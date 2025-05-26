@@ -10,10 +10,10 @@ type Reader = func (*VM, *bufio.Reader, *Deque[Form], *Sloc) (bool, error)
 	
 type VM struct {
 	Debug bool
+	CurrentLib Lib
 	Reader Reader
 	Registers Stack[Value]
 	Stack Stack[Value]
-	
 	ops Stack[Op]
 	opEvals Stack[OpEval]
 }
