@@ -8,8 +8,6 @@ type PC = int
 type Register = int
 	
 type VM struct {
-	Debug bool
-	
 	Registers Stack[Value]
 	Stack Stack[Value]
 
@@ -22,7 +20,6 @@ type VM struct {
 }
 
 func (self *VM) Init(reader Reader) *VM {
-	self.Debug = true
 	self.userLib.Init("user", nil)
 	self.currentLib = &self.userLib
 	self.reader = reader

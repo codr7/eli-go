@@ -1,5 +1,20 @@
-* add call reader
-** add call form
+* add Method type
+** add +/- Methods
+
+* add macro type
+* add define macro
+* add let macro
+
+* add if macro
+** optional else
+
+* add scope reader
+** add scope form
+** emit using vm.WithLib(func())
+
 * add quoting
 ** add quote reader
-* add define macro
+
+scrl
+
+if T (let foo + 35 7 foo) else 0
