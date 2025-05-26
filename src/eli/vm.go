@@ -6,26 +6,27 @@ import (
 
 type PC = int
 type Register = int
-type Reader = func (*VM, *bufio.Reader, *Deque[Form], *Sloc) (bool, error)
 	
 type VM struct {
 	Debug bool
 	
-	Reader Reader
 	Registers Stack[Value]
 	Stack Stack[Value]
 
 	currentLib Lib
 	userLib BaseLib
 
+	reader Reader
 	ops Stack[Op]
 	opEvals Stack[OpEval]
 }
 
-func (self *VM) Init() {
+func (self *VM) Init(reader Reader) *VM {
 	self.Debug = true
 	self.userLib.Init("user")
 	self.currentLib = &self.userLib
+	self.reader = reader
+	return self
 }
 
 func (self *VM) Alloc(n int) Register {
@@ -80,7 +81,7 @@ func (self *VM) Eval(from, to PC) error {
 
 func (self *VM) Read(in *bufio.Reader, out *Deque[Form], sloc *Sloc) error {
 	for {
-		ok, err := self.Reader(self, in, out, sloc)
+		ok, err := self.reader.Read(self, in, out, sloc)
 
 		if err != nil {
 			return err

@@ -5,14 +5,14 @@ type Stack[T any] struct {
 }
 
 func (self Stack[T]) Peek() *T {
-	return self.PeekLast()
+	return self.PeekBack()
 }
 
 func (self *Stack[T]) Pop() T {
-	return self.PopLast()
+	return self.PopBack()
 }
 
 func (self *Stack[T]) Push(it T) {
-	self.PushLast(it)
+	self.PushBack(it)
 }
 

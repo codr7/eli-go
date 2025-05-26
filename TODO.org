@@ -1,8 +1,13 @@
-* add /readers
-** add id reader
-** add call reader
-*** add call form
 * fix repl form emit
+
+* add Bool type
+** bind T/F in core
+
+* import Core into currentLib in main
+
+* replace mk with makefile
+* add call reader
+** add call form
 * add quoting
 ** add quote reader
 * add define macro

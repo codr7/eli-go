@@ -1,7 +1,9 @@
 package forms
 
 import (
-	"io"
+	"bufio"
+	"eli/src/eli"
+	"eli/src/libs/core"
 )
 
 type Id struct {
@@ -10,17 +12,17 @@ type Id struct {
 }
 
 func NewId(sloc eli.Sloc, name string) *Id {
-	return new(Id).Init(pos, eli.S(name))
+	return new(Id).Init(sloc, eli.S(name))
 }
 
-func (self *Id) Init(sloc eli.Sloc, name string) *Id {
+func (self *Id) Init(sloc eli.Sloc, name eli.Sym) *Id {
 	self.BaseForm.Init(sloc)
 	self.name = name
 	return self
 }
 
-func (self *Id) Emit(in *Deque[Form], vm *VM) error {
-	v := vm.CurrentLib.Find(self.name)
+func (self *Id) Emit(in *eli.Deque[eli.Form], vm *eli.VM) error {
+	v := vm.CurrentLib().Find(self.name)
 
 	if v == nil {
 		return eli.NewEmitError(self.Sloc(),
@@ -28,14 +30,15 @@ func (self *Id) Emit(in *Deque[Form], vm *VM) error {
 			self.name)
 	}
 
-	vm.Stack.Push(v)
+	vm.Stack.Push(*v)
 	return nil
 }
 
-func (self Id) Quote(vm *VM) Value {
-	return eli.V(&core.Sym, name)
+func (self Id) Quote(vm *eli.VM) eli.Value {
+	return eli.V(&core.Sym, self.name)
 }
 
 func (self Id) Dump(out *bufio.Writer) error {
-	out.WriteString(self.name)
+	_, err := out.WriteString(self.name.Value())
+	return err
 }

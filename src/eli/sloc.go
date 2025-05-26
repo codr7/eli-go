@@ -20,6 +20,15 @@ func (self *Sloc) Init(source string, line, column int) *Sloc {
 	return self
 }
 
+func (self *Sloc) Step(c rune) {
+	if c == '\n' {
+		self.line++;
+		self.column = 0;
+	} else {
+		self.column++
+	}
+}
+
 func (self Sloc) String() string {
 	return fmt.Sprintf("'%v' at line %v, column %v",
 		self.source, self.line, self.column)

@@ -40,31 +40,31 @@ func (self Deque[T]) Len() int {
 	return len(self.Items)
 }
 
-func (self Deque[T]) PeekFirst() T {
+func (self Deque[T]) PeekFront() T {
 	return self.Items[0]
 }
 
-func (self Deque[T]) PeekLast() *T {
+func (self Deque[T]) PeekBack() *T {
 	return &self.Items[len(self.Items)-1]
 }
 
-func (self *Deque[T]) PopFirst() T {
+func (self *Deque[T]) PopFront() T {
 	it := self.Items[0]
 	self.Delete(0, 1)
 	return it
 }
 
-func (self *Deque[T]) PopLast() T {
+func (self *Deque[T]) PopBack() T {
 	i := len(self.Items) - 1
 	it := self.Items[i]
 	self.Items = self.Items[:i]
 	return it
 }
 
-func (self *Deque[T]) PushFirst(it T) {
+func (self *Deque[T]) PushFront(it T) {
 	self.Insert(0, it)
 }
 
-func (self *Deque[T]) PushLast(it T) {
+func (self *Deque[T]) PushBack(it T) {
 	self.Items = append(self.Items, it)
 }

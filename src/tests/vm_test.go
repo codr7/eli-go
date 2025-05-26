@@ -6,11 +6,15 @@ import (
 	"eli/src/eli"
 	"eli/src/libs/core"
 	"eli/src/ops"
+	"eli/src/readers"
 )
 
+func newVM() *eli.VM {
+	return new(eli.VM).Init(&readers.Form)
+}
+
 func TestGet(t *testing.T) {
-	var vm eli.VM
-	vm.Init()
+	vm := newVM()
 
 	r := vm.Alloc(1)
 	vm.Registers.Items[r] = eli.V(&core.Int, 42)
@@ -25,8 +29,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestPushValue(t *testing.T) {
-	var vm eli.VM
-	vm.Init()
+	vm := newVM()
 
 	pc := vm.EmitPC()
 	vm.Emit(ops.Push(eli.V(&core.Int, 42))) 
@@ -38,8 +41,7 @@ func TestPushValue(t *testing.T) {
 }
 
 func TestPutValue(t *testing.T) {
-	var vm eli.VM
-	vm.Init()
+	vm := newVM()
 
 	r := vm.Alloc(1)
 	pc := vm.EmitPC()
