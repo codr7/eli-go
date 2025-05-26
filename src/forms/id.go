@@ -27,7 +27,7 @@ func (self *Id) Emit(in *eli.Deque[eli.Form], vm *eli.VM) error {
 	if v == nil {
 		return eli.NewEmitError(self.Sloc(),
 			"Unknown identifier: %v",
-			self.name)
+			self.name.Value())
 	}
 
 	vm.Stack.Push(*v)

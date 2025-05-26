@@ -2,7 +2,7 @@ package readers
 
 import (
 	"bufio"
-	"fmt"
+	//"fmt"
 	"eli/src/eli"
 	"eli/src/forms"
 	"io"

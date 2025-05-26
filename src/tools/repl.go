@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"eli/src/eli"
+	"eli/src/forms"
 	"fmt"
 	"log"
 	"os"
@@ -31,9 +32,9 @@ func Repl(vm *eli.VM) {
 		if line == "" {
 			sloc := eli.NewSloc("repl")
 			pc := vm.EmitPC()
-			var forms eli.Deque[eli.Form]
+			var fs eli.Deque[eli.Form]
 
-			if err := vm.Read(bufio.NewReader(&b), &forms, sloc);
+			if err := vm.Read(bufio.NewReader(&b), &fs, sloc);
 			err != nil {
 				fmt.Println(err)
 				b.Reset()
@@ -42,10 +43,10 @@ func Repl(vm *eli.VM) {
 
 			b.Reset()
 
-			/*if err := forms.Emit(vm, env); err != nil {
+			if err := forms.Emit(&fs, vm); err != nil {
 				fmt.Println(err)
 				goto NEXT
-			}*/
+			}
 
 			if err := vm.Eval(pc, -1); err != nil {
 				fmt.Println(err)
