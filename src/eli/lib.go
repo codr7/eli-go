@@ -2,7 +2,6 @@ package eli
 
 type Lib interface {
 	Bind(Sym, Value)
-	BindType(Type)
 	Find(k Sym) *Value
 	Name() Sym
 }
@@ -12,8 +11,8 @@ type BaseLib struct {
 	bindings map[Sym]*Value
 }
 
-func (self *BaseLib) Init(name Sym) {
-	self.name = name
+func (self *BaseLib) Init(name string) {
+	self.name = S(name)
 	self.bindings = make(map[Sym]*Value)
 }
 

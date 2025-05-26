@@ -6,7 +6,7 @@ type Lib struct {
 	eli.BaseLib
 }
 
-func (self *Lib) Init(name eli.Sym) {
+func (self *Lib) Init(name string) {
 	self.BaseLib.Init(name)
 	self.BindType(&Int)
 	self.BindType(&Meta)

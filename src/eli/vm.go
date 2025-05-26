@@ -10,16 +10,22 @@ type Reader = func (*VM, *bufio.Reader, *Deque[Form], *Sloc) (bool, error)
 	
 type VM struct {
 	Debug bool
-	CurrentLib Lib
+	
 	Reader Reader
 	Registers Stack[Value]
 	Stack Stack[Value]
+
+	currentLib Lib
+	userLib BaseLib
+
 	ops Stack[Op]
 	opEvals Stack[OpEval]
 }
 
 func (self *VM) Init() {
 	self.Debug = true
+	self.userLib.Init("user")
+	self.currentLib = &self.userLib
 }
 
 func (self *VM) Alloc(n int) Register {
@@ -36,6 +42,10 @@ func (self *VM) Compile(from PC) {
 	for pc := from; pc < self.ops.Len(); pc++ {
 		self.opEvals.Push(self.ops.Items[pc].Compile(self, pc))
 	}
+}
+
+func (self *VM) CurrentLib() Lib {
+	return self.currentLib
 }
 
 func (self *VM) Emit(op Op) int {
