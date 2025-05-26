@@ -1,4 +1,3 @@
-* replace mk with makefile
 * add call reader
 ** add call form
 * add quoting
