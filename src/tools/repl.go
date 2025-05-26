@@ -53,7 +53,7 @@ func Repl(vm *eli.VM) {
 				goto NEXT
 			}
 		NEXT:
-			vm.Stack.Dump(out)
+			eli.DumpStack(vm.Stack, out, vm)
 			out.WriteRune('\n')
 		} else {
 			fmt.Fprintln(&b, line)

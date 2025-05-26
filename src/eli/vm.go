@@ -23,7 +23,7 @@ type VM struct {
 
 func (self *VM) Init(reader Reader) *VM {
 	self.Debug = true
-	self.userLib.Init("user")
+	self.userLib.Init("user", nil)
 	self.currentLib = &self.userLib
 	self.reader = reader
 	return self

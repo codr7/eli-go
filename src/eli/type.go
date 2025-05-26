@@ -6,9 +6,10 @@ import (
 )
 
 type Type interface {
-	Dump(Value, *bufio.Writer, *VM)
+	Dump(Value, *bufio.Writer, *VM) error
 	Dup(Value, *VM) Value
 	Name() Sym
+	Write(Value, *bufio.Writer, *VM) error
 }
 
 type DataType[T any] interface {
@@ -20,23 +21,28 @@ type BaseType[T any] struct {
 	name Sym
 }
 
-func (t *BaseType[T]) Init(name Sym) {
-	t.name = name
+func (self *BaseType[T]) Init(name Sym) {
+	self.name = name
 }
 
-func (t *BaseType[T]) Dump(v Value, out *bufio.Writer, vm *VM) {
-	fmt.Fprintf(out, "%v", v.Data)
+func (_ BaseType[T]) Dump(v Value, out *bufio.Writer, vm *VM) error {
+	_, err := fmt.Fprintf(out, "%v", v.Data)
+	return err
 }
 
-func (t *BaseType[T]) Dup(v Value, vm *VM) Value {
+func (_ BaseType[T]) Dup(v Value, vm *VM) Value {
 	return v
 }
 
-func (t *BaseType[T]) Name() Sym {
-	return t.name
+func (self BaseType[T]) Name() Sym {
+	return self.name
 }
 
-func (t *BaseType[T]) Zero() T {
+func (self BaseType[T]) Write(v Value, out *bufio.Writer, vm *VM) error {
+	return self.Dump(v, out, vm)
+}
+
+func (_ BaseType[T]) Zero() T {
 	var v T
 	return v
 }

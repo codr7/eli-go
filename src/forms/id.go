@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"eli/src/eli"
 	"eli/src/libs/core"
+	"eli/src/ops"
 )
 
 type Id struct {
@@ -30,7 +31,7 @@ func (self *Id) Emit(in *eli.Deque[eli.Form], vm *eli.VM) error {
 			self.name.Value())
 	}
 
-	vm.Stack.Push(*v)
+	vm.Emit(ops.Push(*v))
 	return nil
 }
 

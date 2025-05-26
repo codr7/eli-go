@@ -1,6 +1,8 @@
 package ops
 
-import "eli/src/eli"
+import (
+	"eli/src/eli"
+)
 
 type TPush struct {
 	value  eli.Value

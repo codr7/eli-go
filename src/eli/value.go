@@ -1,6 +1,7 @@
 package eli
 
 import (
+	"bufio"
 	"fmt"
 )
 
@@ -17,6 +18,10 @@ func (self *Value) Init(t Type, d any) *Value {
 	self.Type = t
 	self.Data = d
 	return self
+}
+
+func (self Value) Dump(out *bufio.Writer, vm *VM) error {
+	return self.Type.Dump(self, out, vm)
 }
 
 func (self Value) Dup(vm *VM) Value {

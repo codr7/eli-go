@@ -2,11 +2,11 @@ package core
 
 import "eli/src/eli"
 
-type NilType struct {
+type TNil struct {
 	eli.BaseType[any]
 }
 
-var Nil NilType
+var Nil TNil
 var NIL eli.Value
 
 func init() {

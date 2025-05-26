@@ -2,11 +2,11 @@ package core
 
 import "eli/src/eli"
 
-type IntType struct {
+type TInt struct {
 	eli.BaseType[int]
 }
 
-var Int IntType
+var Int TInt
 
 func init() {
 	Int.Init(eli.S("Int"))
