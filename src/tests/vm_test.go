@@ -16,7 +16,7 @@ func newVM() *eli.VM {
 func TestGet(t *testing.T) {
 	vm := newVM()
 
-	r := vm.Alloc(1)
+	r := vm.AllocateRegisters(1)
 	vm.Registers.Items[r] = eli.V(&core.Int, 42)
 
 	pc := vm.EmitPC()
@@ -43,7 +43,7 @@ func TestPushValue(t *testing.T) {
 func TestPutValue(t *testing.T) {
 	vm := newVM()
 
-	r := vm.Alloc(1)
+	r := vm.AllocateRegisters(1)
 	pc := vm.EmitPC()
 	vm.Emit(ops.Put(r, eli.V(&core.Int, 42))) 
 	vm.Eval(pc, -1)

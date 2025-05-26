@@ -29,7 +29,7 @@ func (self *VM) Init(reader Reader) *VM {
 	return self
 }
 
-func (self *VM) Alloc(n int) Register {
+func (self *VM) AllocateRegisters(n int) Register {
 	result := self.Registers.Len()
 
 	for i := 0; i < n; i++ {
