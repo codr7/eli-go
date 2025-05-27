@@ -1,5 +1,8 @@
-* add Method type
-** add +/- Methods
+* add vm.WithLib(func())
+** use in scope emit
+
+* add method type
+** add +/- methods
 
 * add macro type
 * add define macro
@@ -7,10 +10,6 @@
 
 * add if macro
 ** optional else
-
-* add scope reader
-** add scope form
-** emit using vm.WithLib(func())
 
 * add quoting
 ** add quote reader

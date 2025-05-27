@@ -34,7 +34,7 @@ func Repl(vm *eli.VM) {
 			pc := vm.EmitPC()
 			var fs eli.Deque[eli.Form]
 
-			if err := vm.Read(bufio.NewReader(&b), &fs, sloc);
+			if err := vm.ReadAll(bufio.NewReader(&b), &fs, sloc);
 			err != nil {
 				fmt.Println(err)
 				b.Reset()
@@ -43,7 +43,7 @@ func Repl(vm *eli.VM) {
 
 			b.Reset()
 
-			if err := forms.Emit(&fs, vm); err != nil {
+			if err := forms.EmitAll(fs, vm); err != nil {
 				fmt.Println(err)
 				goto NEXT
 			}
